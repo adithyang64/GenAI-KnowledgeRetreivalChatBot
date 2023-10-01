@@ -1,4 +1,4 @@
-import speech_recognition as sr
+import speech_recognition as sr #Open source speech recognition Library from CMUSphinx
 import os
 import moviepy.editor as mp
 
@@ -66,4 +66,4 @@ def video_to_text():
 
         print(f"Transcribed {video_file} to {os.path.basename(output_file_path)}")
 
-    print("Transcription of all video files is complete.")
+    print("Transcription of all video files is complete...")

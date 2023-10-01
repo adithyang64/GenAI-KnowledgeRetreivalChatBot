@@ -1,9 +1,14 @@
 from langchain.chat_models.openai import ChatOpenAI
 import openai
+import os
 from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain.document_loaders import DirectoryLoader
+
+from constants import openai_key
+
+#os.environ["OPENAI_API_KEY"]=openai_key
 
 def document_parse_loader():
     directory = 'temp_documents/'
@@ -36,16 +41,15 @@ def testcase_generator(txt_content,user_question):
     prompt = PromptTemplate.from_template(prompt_template)
     
     # Define LLM chain
-    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", openai_api_key="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")
+    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", openai_api_key="")
     llm_chain = LLMChain(llm=llm, prompt=prompt)
 
     # Get the text to be summarized
     text = txt_content
-    
 
     # Generate summary
     summary = llm_chain.run(text)
 
     # Print the summary
-    print(summary)
+    #print(summary)
     return summary
