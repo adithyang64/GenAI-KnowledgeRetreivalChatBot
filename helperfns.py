@@ -6,8 +6,21 @@ import os
 import sys
 import base64
 import atexit
+import pinecone
+import urllib
+
+from langchain.document_loaders import DirectoryLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import SentenceTransformerEmbeddings
+from langchain.vectorstores import Pinecone
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.llms import OpenAI
+from langchain.chains.question_answering import load_qa_chain
 
 from video2txt import video_to_text
+
+from constants import openai_key,pinecone_environment,pinecone_api_key,pinecone_index
+print(openai_key)
 
 def prompt_form(self):
     """
@@ -62,7 +75,60 @@ def generate_messages(container):
                     seed="H" if i % 2 == 0 else "AI",
                 )
 
-def qa_chatbot():
+def load_docs(directory):
+  loader = DirectoryLoader(directory)
+  documents = loader.load()
+  return documents
+
+def split_docs(documents,chunk_size=250,chunk_overlap=20):
+  text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+  docs = text_splitter.split_documents(documents)
+  return docs
+ 
+def get_similiar_docs(query,index, k=2, score=False):
+  print(index)
+  if score:
+    similar_docs = index.similarity_search_with_score(query, k=k)
+  else:
+    similar_docs = index.similarity_search(query, k=k)
+  return similar_docs
+ 
+def init_pinecone(docs, embeddings):
+	pinecone.init(
+		api_key=pinecone_api_key,
+		environment=pinecone_environment
+	)
+	index_name = pinecone_index
+	index = Pinecone.from_documents(docs, embeddings, index_name=index_name)
+	return index
+
+def save_embeddings():
+	directory = 'temp_documents/'
+	documents = load_docs(directory)
+	#len(documents)
+	#print(documents)
+	#print(documents[0].page_content)
+	txt_content = documents[0].page_content
+	#print(txt_content)
+	docs = split_docs(documents)
+	print(len(docs))
+	#print(docs[0].page_content)
+    
+    #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+	embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002",openai_api_key=openai_key)
+	print("I'm here after creating Embeddings")
+    
+    
+	query_result = embeddings.embed_query("Hello world")
+	len(query_result)
+	return init_pinecone(docs, embeddings)
+
+def get_answer(query,index,chain):
+  similar_docs = get_similiar_docs(query,index)
+  answer = chain.run(input_documents=similar_docs, question=query)
+  return answer
+
+def qa_chatbot(index):
     # Create a text box and a submit button
     st.subheader("Let's Chat....")
     # user_input = st.text_area("Please Ask Your Question")
@@ -95,7 +161,17 @@ def qa_chatbot():
             old_stdout = sys.stdout
             sys.stdout = captured_output = io.StringIO()
 
-            output = "Output from AI"
+            model_name = "gpt-3.5-turbo"
+            llm = OpenAI(model_name=model_name,openai_api_key=openai_key)
+            print("I'm inside qa_chatbot, Before initializing Chain")
+            chain = load_qa_chain(llm, chain_type="stuff")
+            print("I'm inside qa_chatbot, Before asking Question")
+            #query = "Who is Virat Kohli?"
+            query=user_input
+            answer = get_answer(query,index,chain)
+            print(answer)
+            #output = "Output from AI"
+            output = answer
 
             sys.stdout = old_stdout
 

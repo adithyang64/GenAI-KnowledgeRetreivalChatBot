@@ -5,7 +5,7 @@ import io
 import sys
 import atexit
 from TestCaseGenerator import document_parse_loader, testcase_generator
-from helperfns import cleanup_temp_files, cleanup_temp_video_files, generate_messages, initialize, qa_chatbot, upload_docs_display, upload_video_display
+from helperfns import cleanup_temp_files, cleanup_temp_video_files, generate_messages, initialize, qa_chatbot, save_embeddings, upload_docs_display, upload_video_display
 from streamlit_chat import message
 
 from video2txt import video_to_text
@@ -26,14 +26,14 @@ with st.sidebar:
 
     if selected_tab == "Upload Documents (PDF, DOCX, TXT)":
         flag,temp_files=upload_docs_display("temp_documents")
-
     else:
         flag,temp_video_files=upload_video_display("temp_videos")
 
 if flag==1:
     tab1, tab2 = st.tabs(["Ask Questions to Chatbot", "Get Assistance from the Bot"])
     with tab1:
-        qa_chatbot()
+        index = save_embeddings()
+        qa_chatbot(index)
     with tab2:
         st.subheader("Get Assistance")
         user_input = st.text_area("Please Ask Your Question")

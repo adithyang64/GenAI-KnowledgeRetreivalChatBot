@@ -34,18 +34,22 @@ def testcase_generator(txt_content,user_question):
     # "{text}"
     # Test Cases:"""
     # prompt = PromptTemplate.from_template(prompt_template)
+
+    # Get the text to be summarized
+    text = txt_content
+
     ques = user_question
     # Define prompt
-    prompt_template = ques+"""{text}"Test Cases:"""
+    prompt_template = """Provide answer to the Question : """+ques+"""Try Answering the Question with help of : """+text+""".If you can't answer the question, Reply that you can't help"""+"""{text}"""
+    #prompt_template = ques+"""{text}"Test Cases:"""
     print(prompt_template)
     prompt = PromptTemplate.from_template(prompt_template)
     
     # Define LLM chain
-    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", openai_api_key="")
+    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", openai_api_key=openai_key)
     llm_chain = LLMChain(llm=llm, prompt=prompt)
 
-    # Get the text to be summarized
-    text = txt_content
+    
 
     # Generate summary
     summary = llm_chain.run(text)
