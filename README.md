@@ -54,9 +54,12 @@ Once all the setup is complete, you can begin interacting with our chatbot and a
 
 #### Here are few Screen Captures from the Application
 
-![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/bd1452d9-3e83-42c3-a49b-8edbab640fe7)
+ChatBot Answering the Questions asked based on the Document
 ![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/cf014b3b-4ca6-4617-9e8b-3590597f83d8)
 ![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/35222d90-903a-4512-b970-2286b8b5603e)
+
+**Chunks of Data getting stored in PineCone Indexes**
+![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/7b665b9e-5a36-4d37-a001-be435413e6a1)
 
 
 ## Scope of Improvement
