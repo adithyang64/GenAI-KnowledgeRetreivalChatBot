@@ -51,3 +51,19 @@ streamlit run app.py
 ```
 
 Once all the setup is complete, you can begin interacting with our chatbot and asking questions.
+
+#### Here are few Screen Captures from the Application
+
+![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/bd1452d9-3e83-42c3-a49b-8edbab640fe7)
+![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/cf014b3b-4ca6-4617-9e8b-3590597f83d8)
+![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/35222d90-903a-4512-b970-2286b8b5603e)
+
+
+## Scope of Improvement
+
+- Enhance system latency
+- Improve model accuracy
+- Add support for reading PDF and Word files
+- Implement data deletion from Pinecone Index upon exit
+- Efficiently delete temporary files, handling exceptions gracefully
+- Utilize Spinner for loading indication
