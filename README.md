@@ -29,6 +29,10 @@ If a match is found, the chatbot leverages the LangChain Library's qa chain to p
 In this approach, the chatbot obtains the user's question and sends it to the LLM based on a predefined prompt template.
 Utilizing the LangChain Library - LLM chain, the chatbot answers the question based on the response from the LLM.
 
+
+![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/41ccf9a9-900e-4259-b003-25d2e81c4401)
+
+
 ## Tech Stack
 
 Streamlit
@@ -52,13 +56,17 @@ streamlit run app.py
 
 Once all the setup is complete, you can begin interacting with our chatbot and asking questions.
 
-#### Here are few Screen Captures from the Application
 
-ChatBot Answering the Questions asked based on the Document
+
+### Here are few Screen Captures from the Application
+
+**ChatBot Answering the Questions asked based on the Document**
+
 ![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/cf014b3b-4ca6-4617-9e8b-3590597f83d8)
 ![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/35222d90-903a-4512-b970-2286b8b5603e)
 
 **Chunks of Data getting stored in PineCone Indexes**
+
 ![image](https://github.com/adithyang64/GenAI-KnowledgeRetreivalChatBot/assets/67658457/7b665b9e-5a36-4d37-a001-be435413e6a1)
 
 
